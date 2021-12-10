@@ -79,7 +79,10 @@ public class ChecagemLogin_Activity extends AppCompatActivity {
             mTextView = findViewById(R.id.tvEsqueceuSenha);
             mTextView.setPaintFlags(mTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-            //Evento de limpar Componente
+            /*Evento de limpar Componente
+
+            implementado com o "hint" no xml
+
             edUser.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -104,7 +107,7 @@ public class ChecagemLogin_Activity extends AppCompatActivity {
                     return false;
                 }
             });
-
+            */
             btLogar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

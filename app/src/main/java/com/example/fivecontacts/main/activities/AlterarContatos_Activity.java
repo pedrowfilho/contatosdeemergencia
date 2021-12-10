@@ -59,7 +59,11 @@ public class AlterarContatos_Activity extends AppCompatActivity implements Botto
             }
         }
         lv = findViewById(R.id.listContatosDoCell);
-        //Evento de limpar Componente
+
+        /*Evento de limpar Componente
+
+        implementado com "hint" no xml
+
         edtNome.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -70,7 +74,7 @@ public class AlterarContatos_Activity extends AppCompatActivity implements Botto
 
                 return false;
             }
-        });
+        });*/
     }
 
     public void salvarContato (Contato w){

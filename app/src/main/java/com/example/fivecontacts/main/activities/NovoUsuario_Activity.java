@@ -50,7 +50,10 @@ public class NovoUsuario_Activity extends AppCompatActivity {
         setTitle("Contatos de Emergência");
 
 
-        //Evento de limpar Componente
+        /*Evento de limpar Componente
+
+        implementado com "hint" no xml
+
         edUser.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -104,7 +107,7 @@ public class NovoUsuario_Activity extends AppCompatActivity {
                 return false;
             }
         });
-
+        */
 
 
         btCriar.setOnClickListener(new View.OnClickListener() {
