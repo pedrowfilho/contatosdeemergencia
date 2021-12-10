@@ -29,13 +29,14 @@ import java.util.ArrayList;
 
 public class ChecagemLogin_Activity extends AppCompatActivity {
 
-    boolean primeiraVezUser=true;
-    boolean primeiraVezSenha=true;
+    boolean primeiraVezUser = true;
+    boolean primeiraVezSenha = true;
     EditText edUser;
     EditText edPass;
     Button btLogar;
     Button btNovo;
     TextView mTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,20 +57,19 @@ public class ChecagemLogin_Activity extends AppCompatActivity {
 */
 
         //Existe um usuário padrão logado?
-        if(montarObjetoUserSemLogar()){
+        if (montarObjetoUserSemLogar()) {
             User user = montarObjetoUser();
 
             preencherListaDeContatos(user);
 
             //Abrir a atividade de Lista de Contatos
             Intent intent = new Intent(ChecagemLogin_Activity.this, ListaDeContatos_Activity.class);
-            intent.putExtra("usuario",user);
+            intent.putExtra("usuario", user);
             startActivity(intent);
             finish();
 
 
-
-        }else { //Checar Usuário e Senha ou clicar em criar novo
+        } else { //Checar Usuário e Senha ou clicar em criar novo
             btLogar = findViewById(R.id.btLogar);
             btNovo = findViewById(R.id.btNovo);
             edUser = findViewById(R.id.edT_Login);
@@ -135,15 +135,11 @@ public class ChecagemLogin_Activity extends AppCompatActivity {
                             intent.putExtra("usuario", user);
                             startActivity(intent);
 
-
                         } else {
                             Toast.makeText(ChecagemLogin_Activity.this, "Login e Senha Incorretos", Toast.LENGTH_LONG).show();
-
                         }
-
                     } else {
                         Toast.makeText(ChecagemLogin_Activity.this, "Login e Senha nulos", Toast.LENGTH_LONG).show();
-
                     }
 
                 }
@@ -153,35 +149,35 @@ public class ChecagemLogin_Activity extends AppCompatActivity {
             btNovo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(ChecagemLogin_Activity.this, NovoUsuario_Activity.class);
-                    startActivity(intent);
+                Intent intent = new Intent(ChecagemLogin_Activity.this, NovoUsuario_Activity.class);
+                startActivity(intent);
                 }
             });
 
         }
 
 
-   }
+    }
 
     private User montarObjetoUser() {
         User user = null;
-        SharedPreferences temUser= getSharedPreferences("usuarioPadrao", Activity.MODE_PRIVATE);
-        String loginSalvo = temUser.getString("login","");
-        String senhaSalva = temUser.getString("senha","");
-        String nomeSalvo = temUser.getString("nome","");
-        String emailSalvo = temUser.getString("email","");
-        boolean manterLogado=temUser.getBoolean("manterLogado",false);
-        boolean temaEscuro=temUser.getBoolean("tema",false);
+        SharedPreferences temUser = getSharedPreferences("usuarioPadrao", Activity.MODE_PRIVATE);
+        String loginSalvo = temUser.getString("login", "");
+        String senhaSalva = temUser.getString("senha", "");
+        String nomeSalvo = temUser.getString("nome", "");
+        String emailSalvo = temUser.getString("email", "");
+        boolean manterLogado = temUser.getBoolean("manterLogado", false);
+        boolean temaEscuro = temUser.getBoolean("tema", false);
 
-        user=new User(nomeSalvo,loginSalvo,senhaSalva,emailSalvo,manterLogado);
+        user = new User(nomeSalvo, loginSalvo, senhaSalva, emailSalvo, manterLogado);
         user.setTema_escuro(temaEscuro);
         return user;
     }
 
 
     private boolean montarObjetoUserSemLogar() {
-        SharedPreferences temUser= getSharedPreferences("usuarioPadrao", Activity.MODE_PRIVATE);
-        boolean manterLogado = temUser.getBoolean("manterLogado",false);
+        SharedPreferences temUser = getSharedPreferences("usuarioPadrao", Activity.MODE_PRIVATE);
+        boolean manterLogado = temUser.getBoolean("manterLogado", false);
         return manterLogado;
     }
 
@@ -193,7 +189,6 @@ public class ChecagemLogin_Activity extends AppCompatActivity {
         ArrayList<Contato> contatos = new ArrayList<Contato>();
 
         Contato contato;
-
 
         for (int i = 1; i <= num; i++) {
             String objSel = recuperarContatos.getString("contato" + i, "");
@@ -207,14 +202,10 @@ public class ChecagemLogin_Activity extends AppCompatActivity {
                     if (contato != null) {
                         contatos.add(contato);
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
-
-
         }
         user.setContatos(contatos);
     }

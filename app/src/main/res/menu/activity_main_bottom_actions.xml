@@ -12,12 +12,10 @@
         <item
             android:id="@+id/anvMudar"
             android:icon="@drawable/ic_action_mudar"
-            android:title="Mudar Contatos" />
+            android:title="Contatos" />
         <item
             android:id="@+id/anvPerfil"
             android:icon="@drawable/ic_action_perfil"
             android:title="Perfil" />
-
-
     </group>
 </menu>

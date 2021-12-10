@@ -47,7 +47,7 @@ public class NovoUsuario_Activity extends AppCompatActivity {
 
         swTema= findViewById(R.id.swTema);
 
-        setTitle("Novo Usuário");
+        setTitle("Contatos de Emergência");
 
 
         //Evento de limpar Componente
@@ -110,7 +110,6 @@ public class NovoUsuario_Activity extends AppCompatActivity {
         btCriar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 String nome, login, senha;
                 nome = edNome.getText().toString();

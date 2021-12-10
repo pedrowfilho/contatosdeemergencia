@@ -52,6 +52,7 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
     User user;
 
     String numeroCall;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +92,6 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
 
         Contato contato;
 
-
         for (int i = 1; i <= num; i++) {
             String objSel = recuperarContatos.getString("contato" + i, "");
             if (objSel.compareTo("") != 0) {
@@ -110,8 +110,6 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
                 }
 
             }
-
-
         }
         Log.v("PDM3","contatos:"+contatos.size());
         user.setContatos(contatos);
@@ -138,32 +136,37 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
                 listItemMap.put("abrevs",contatosAbrevs[i]);
                 itemDataList.add(listItemMap);
             }
-            SimpleAdapter simpleAdapter = new SimpleAdapter(this,itemDataList,R.layout.list_view_layout_imagem,
+            final SimpleAdapter simpleAdapter = new SimpleAdapter(this,itemDataList,R.layout.list_view_layout_imagem,
                     new String[]{"imageId","contato","abrevs"},new int[]{R.id.userImage, R.id.userTitle,R.id.userAbrev});
 
             lv.setAdapter(simpleAdapter);
-
 
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                if (checarPermissaoPhone_SMD(contatos.get(i).getNumero())) {
 
-                    if (checarPermissaoPhone_SMD(contatos.get(i).getNumero())) {
-
-                        Uri uri = Uri.parse(contatos.get(i).getNumero());
-                         //  Intent itLigar = new Intent(Intent.ACTION_DIAL, uri);
-                            Intent itLigar = new Intent(Intent.ACTION_CALL, uri);
-                        startActivity(itLigar);
-                    }
-
+                    Uri uri = Uri.parse(contatos.get(i).getNumero());
+                     //  Intent itLigar = new Intent(Intent.ACTION_DIAL, uri);
+                        Intent itLigar = new Intent(Intent.ACTION_CALL, uri);
+                    startActivity(itLigar);
+                }
 
                 }
             });
 
-        }
+            lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long l) {
+                    contatos.remove(i);
 
+                    return false;
+                }
+            });
+
+        }
 
     }
     protected void preencherListView(User user) {
@@ -184,20 +187,18 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
 
             lv.setAdapter(adaptador);
 
-
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                    if (checarPermissaoPhone_SMD(contatos.get(i).getNumero())) {
+                if (checarPermissaoPhone_SMD(contatos.get(i).getNumero())) {
 
-                        Uri uri = Uri.parse(contatos.get(i).getNumero());
-                      //   Intent itLigar = new Intent(Intent.ACTION_DIAL, uri);
-                        Intent itLigar = new Intent(Intent.ACTION_CALL, uri);
-                        startActivity(itLigar);
-                    }
-
+                    Uri uri = Uri.parse(contatos.get(i).getNumero());
+                  //   Intent itLigar = new Intent(Intent.ACTION_DIAL, uri);
+                    Intent itLigar = new Intent(Intent.ACTION_CALL, uri);
+                    startActivity(itLigar);
+                }
 
                 }
             });
@@ -277,7 +278,6 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
             Intent intent = new Intent(this, PerfilUsuario_Activity.class);
             intent.putExtra("usuario", user);
             startActivityForResult(intent, 1111);
-
         }
         // Checagem de o Item selecionado é o do perfil
         if (item.getItemId() == R.id.anvMudar) {
@@ -310,8 +310,6 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
             preencherListView(user); //Montagem do ListView
         }
 
-
-
     }
 
     private User atualizarUser() {
@@ -333,12 +331,9 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
         if (codigo==1){
           String[] permissions ={Manifest.permission.CALL_PHONE};
           requestPermissions(permissions, 2222);
-
         }
 
-
     }
-
 
 }
 

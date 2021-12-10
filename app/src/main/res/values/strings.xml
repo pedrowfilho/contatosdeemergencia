@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Contatos de Emergência</string>
+    <string name="login">login</string>
+    <string name="senha">senha</string>
+    <string name="nome">nome</string>
+    <string name="email">email</string>
+    <string name="bem_vindo">Bem vindo!</string>
+    <string name="entrar">Entrar</string>
+    <string name="novo">Novo</string>
+    <string name="esqueceu_a_senha">Esqueceu a senha?</string>
+    <string name="modificar">modificar</string>
 </resources>
