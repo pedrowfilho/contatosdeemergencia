@@ -206,7 +206,7 @@ public class ChecagemLogin_Activity extends AppCompatActivity {
                         contatos.add(contato);
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    e.printStackTrace(); 
                 }
             }
         }

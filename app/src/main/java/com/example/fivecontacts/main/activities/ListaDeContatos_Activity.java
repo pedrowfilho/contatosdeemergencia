@@ -18,6 +18,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -161,15 +163,6 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
                 }
             });
 
-            lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long l) {
-                    contatos.remove(i);
-
-                    return false;
-                }
-            });
-
         }
 
     }
@@ -192,6 +185,8 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
 
             lv.setAdapter(adaptador);
 
+            registerForContextMenu(lv);
+
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
@@ -207,14 +202,15 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
 
                 }
 
-                //tentativa de remover contato da lista, mas não está funcionando
-                /*
-                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int posicao, long l) {
-                    adaptador.remove(some_data[posicao]);
-                    adaptador.notifyDataSetChanged();
+            });
 
-                    return true;
-                }*/
+            lv.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                @Override
+                public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+                    if(view.getId() == R.id.listView1){
+                        contextMenu.add("excluir");
+                    }
+                }
             });
 
         }//fim do IF do tamanho de contatos
@@ -274,7 +270,7 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
                     startActivity(itLigar);
 
                 } else {
-                    Toast.makeText(this, "SEU FELA!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Permissão negada", Toast.LENGTH_LONG).show();
 
                     String mensagem = "Seu aplicativo pode ligar diretamente, mas sem permissão não funciona. Se você marcou não perguntar mais, você deve ir na tela de configurações para mudar a instalação ou reinstalar o aplicativo  ";
                     String titulo = "Porque precisamos telefonar?";
@@ -350,7 +346,13 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
         }
 
     }
-
+/*
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if(v.getId() == R.id.listView1){
+            menu.add("Excluir");
+        }
+    }*/
 }
 
 
