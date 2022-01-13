@@ -3,8 +3,6 @@ package com.example.fivecontacts.main.activities;
 import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -13,22 +11,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fivecontacts.R;
@@ -38,9 +30,7 @@ import com.example.fivecontacts.main.utils.UIEducacionalPermissao;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,6 +46,8 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
     String numeroCall;
 
     private String[] some_data = null;
+
+    private ArrayAdapter<String> adaptador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +77,17 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
                 }
             }
         }
+
+        registerForContextMenu(lv);
+
+        lv.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+                if(view.getId() == R.id.listView1){
+                    contextMenu.add("excluir");
+                }
+            }
+        });
 
     }
 
@@ -179,13 +182,9 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
                 nomesSP[j] = contatos.get(j).getNome();
             }
 
-            final ArrayAdapter<String> adaptador;
-
             adaptador = new ArrayAdapter<String>(this, R.layout.list_view_layout, nomesSP);
 
             lv.setAdapter(adaptador);
-
-            registerForContextMenu(lv);
 
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -202,15 +201,6 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
 
                 }
 
-            });
-
-            lv.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-                @Override
-                public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-                    if(view.getId() == R.id.listView1){
-                        contextMenu.add("excluir");
-                    }
-                }
             });
 
         }//fim do IF do tamanho de contatos
@@ -263,7 +253,7 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
         switch (requestCode) {
             case 2222:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "VALEU", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Permissão ok", Toast.LENGTH_LONG).show();
                     Uri uri = Uri.parse(numeroCall);
                     //   Intent itLigar = new Intent(Intent.ACTION_DIAL, uri);
                     Intent itLigar = new Intent(Intent.ACTION_CALL, uri);
@@ -346,13 +336,22 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
         }
 
     }
-/*
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        if(v.getId() == R.id.listView1){
-            menu.add("Excluir");
-        }
-    }*/
-}
 
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        Log.v("SMD", "entrou no onContextItemSelected");
+        final ArrayList<Contato> contatos = user.getContatos();
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int posicao = menuInfo.position;
+        switch (item.getItemId()){
+            case 0:
+                contatos.remove(posicao);
+                //atualizarListaDeContatos(user);
+                preencherListViewImagens(user);
+                preencherListView(user);
+                adaptador.notifyDataSetChanged();
+        }
+        return true;
+    }
+}
 
